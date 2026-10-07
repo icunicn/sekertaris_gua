@@ -1,5 +1,6 @@
 fastapi
 uvicorn[standard]
 supabase
-python-dotenv
 pydantic-settings
+httpx
+python-telegram-bot[job-queue]
