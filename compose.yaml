@@ -1,0 +1,49 @@
+services:
+
+  orbit-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: orbit-api
+
+    command:
+      [
+        "uvicorn",
+        "app.main:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000"
+      ]
+
+    env_file:
+      - .env
+
+    ports:
+      - "8000:8000"
+
+    restart: unless-stopped
+
+
+  orbit-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: orbit-bot
+
+    command:
+      [
+        "python",
+        "-m",
+        "app.bot.main"
+      ]
+
+    env_file:
+      - .env
+
+    depends_on:
+      - orbit-api
+
+    restart: unless-stopped
